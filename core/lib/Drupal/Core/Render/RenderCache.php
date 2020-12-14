@@ -73,8 +73,47 @@ class RenderCache implements RenderCacheInterface {
         return $this->get($cached_element);
       }
       // Return the cached element.
+      return $this->filterCachedElement($cached_element);
+    }
+    return FALSE;
+  }
+
+  /**
+   * Filters the cached element before returning it from the cache.
+   *
+   * @param array|false $cached_element
+   *   A renderable cached element.
+   *
+   * @return array|false
+   *   A renderable array, with the original element and all its children pre-
+   *   rendered, or FALSE if this element is part of a form that is executed in
+   *   this request.
+   */
+  protected function filterCachedElement($cached_element) {
+    // Return early when this is a GET or HEAD request.
+    $current_request = $this->requestStack->getCurrentRequest();
+    if ($current_request->isMethodCacheable()) {
       return $cached_element;
     }
+
+    // If there is no form in the $cached_element, return it.
+    if (!in_array('form', $cached_element['#cache']['tags'])) {
+      return $cached_element;
+    }
+
+    $form_id = $current_request->request->get('form_id');
+    // This case should not happen, but when it does fallback to old behavior.
+    if (!$form_id) {
+      return FALSE;
+    }
+
+    // If this is not the form we are looking for, return the $cached_element.
+    $form_id_tag = 'form:' . $form_id;
+    if (!in_array($form_id_tag, $cached_element['#cache']['tags'])) {
+      return $cached_element;
+    }
+
+    // We need to execute the form, don't return the form from cache.
     return FALSE;
   }
 
