@@ -762,7 +762,6 @@ class FormBuilder implements FormBuilderInterface, FormValidatorInterface, FormS
       $form['#cache']['contexts'][] = 'user.roles:authenticated';
       $form['#cache']['tags'][] = 'form';
       $form['#cache']['tags'][] = 'form:' . $form_id;
-      $form['#cache']['max-age'] = 0;
 
       if ($user && $user->isAuthenticated()) {
         // Generate a public token and placeholder based on the form ID.
