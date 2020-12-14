@@ -113,8 +113,8 @@ parameters:
       #
       # Disable by setting to [].
       #
-      # @default []
-      tags: []
+      # @default ['form']
+      tags: ['form']
   # Cacheability debugging:
   #
   # Responses with cacheability metadata (CacheableResponseInterface instances)

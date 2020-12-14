@@ -18,7 +18,7 @@ parameters:
     auto_placeholder_conditions:
       max-age: 0
       contexts: ['session', 'user']
-      tags: []
+      tags: ['form']
   factory.keyvalue:
     default: keyvalue.database
   http.response.debug_cacheability_headers: false
