@@ -3,7 +3,7 @@
 namespace Drupal\dynamic_page_cache\PageCache\RequestPolicy;
 
 use Drupal\Core\PageCache\ChainRequestPolicy;
-use Drupal\Core\PageCache\RequestPolicy\CommandLineOrUnsafeMethod;
+use Drupal\Core\PageCache\RequestPolicy\CommandLine;
 
 /**
  * The default Dynamic Page Cache request policy.
@@ -18,7 +18,7 @@ class DefaultRequestPolicy extends ChainRequestPolicy {
    * Constructs the default Dynamic Page Cache request policy.
    */
   public function __construct() {
-    $this->addPolicy(new CommandLineOrUnsafeMethod());
+    $this->addPolicy(new CommandLine());
   }
 
 }
